@@ -1,5 +1,10 @@
 # recipe-app
 
+A web-app for user to manage his or hers recipes made with Vue 2. 
+Consists of two parts:
+1. Local collection with CRUD + search, sort, filter
+2. External search for searching the web for recipes with option to add found recipes to local collection using MealDB API
+
 ## Project setup
 ```
 npm install -g @vue/cli (if needed)
