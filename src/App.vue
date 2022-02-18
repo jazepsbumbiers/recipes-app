@@ -1,28 +1,84 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <Header
+            :search="search"
+            :search-allowed="searchAllowed"
+            :filter-sort-allowed="filterSortAllowed"
+            @item-added="$refs.router.$refs.list.fetchData()"
+            @searched="(query) => search = query"
+            @sort-or-filter="sidebar = true"
+        />
+
+        <Sidebar
+            :visible="sidebar"
+            title="Sort / Filter"
+            id="sort-or-filter-sidebar"
+            @sidebar-closed="sidebar = false"
+        >
+            <Sort
+                @sorting-active="(options) => sortOptions = options"
+            />
+
+            <Filtering
+                class="mt-3"
+                @filtering-active="(options) => filterOptions = options"
+            />
+        </Sidebar>
+
+        <transition
+            mode="out-in"
+            enter-active-class="animate__animated animate__fadeInDown"
+            leave-active-class="animate__animated animate__fadeOutDown"
+        >
+            <router-view
+                ref="router"
+                :search="search"
+                :sort-options="sortOptions"
+                :filter-options="filterOptions"
+                @items-loaded="(items) => this.setSearchAndFilterAbility(items)"
+                @item-saved-to-collection="itemSavedToCollection"
+            />
+        </transition>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import Header from '@/components/Header';
+    import Sidebar from '@/components/common/Sidebar';
+    import Sort from '@/components/Sort';
+    import Filtering from '@/components/Filtering';
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        components: {
+            Header,
+            Sidebar,
+            Sort,
+            Filtering,
+        },
+        data() {
+            return {
+                search: '',
+                searchAllowed: false,
+                filterSortAllowed: false,
+                sidebar: false,
+                sortOptions: {},
+                filterOptions: {},
+            };
+        },
+        watch: {
+            $route() {
+                this.search = '';
+            },
+        },
+        methods: {
+            setSearchAndFilterAbility(items) {
+                this.searchAllowed = items.length ? true : false;
+                this.filterSortAllowed = items.length ? true : false;
+            },
+            itemSavedToCollection() {
+                this.search = '';
+                this.$router.push('/');
+            },
+        },
+    };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
