@@ -2,11 +2,14 @@
 
 ## Project setup
 ```
+npm install -g @vue/cli (if needed)
+npm install -g json-server (package for hosting local mock rest api client with json db)
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Serve backend, frontend
 ```
+json-server --watch db.json
 npm run serve
 ```
 
