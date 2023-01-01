@@ -388,7 +388,10 @@
                         );
                     }
 
-                    this.$emit('item-updated', response.data);
+                    this.$emit('item-updated', {
+                        ...response.data,
+                        id: this.id,
+                    });
                 } else {
                     response = await axios.post(
                         'http://localhost:3000/recipes',

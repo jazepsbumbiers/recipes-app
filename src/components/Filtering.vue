@@ -96,13 +96,13 @@
             filterOptions: {
                 deep: true,
                 handler(options) {
-                    sessionStorage.setItem('filtered-options', JSON.stringify(options));
+                    sessionStorage.setItem('active-filters', JSON.stringify(options));
                     this.$emit('filtering-active', options);
                 },
             },
         },
         mounted() {
-            const selectedOptions = sessionStorage.getItem('filtered-options');
+            const selectedOptions = sessionStorage.getItem('active-filters');
 
             if (selectedOptions) {
                 this.filterOptions = JSON.parse(selectedOptions);

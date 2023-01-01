@@ -41,6 +41,9 @@
             search(query) {
                 this.query = query;
             },
+            query(value) {
+                sessionStorage.setItem('active-search-term', value);
+            },
         },
         methods: {
             clearSearch() {

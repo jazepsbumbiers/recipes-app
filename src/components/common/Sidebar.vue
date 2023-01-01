@@ -6,6 +6,7 @@
         :shadow="shadow"
         :backdrop="backdrop"
         :backdrop-variant="backdropVariant"
+        :no-close-on-backdrop="noCloseOnBackdrop"
         :id="id"
         @hidden="$emit('sidebar-closed')"
     >
@@ -36,11 +37,15 @@
             },
             backdrop: {
                 type: Boolean,
-                default: true,
+                default: false,
             },
             backdropVariant: {
                 type: String,
                 default: 'transparent',
+            },
+            noCloseOnBackdrop: {
+                type: Boolean,
+                default: true,
             },
             id: {
                 type: String,

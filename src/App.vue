@@ -1,12 +1,12 @@
 <template>
-    <div id="app">
+    <div>
         <Header
             :search="search"
             :search-allowed="searchAllowed"
             :filter-sort-allowed="filterSortAllowed"
             @item-added="$refs.router.$refs.list.fetchData()"
             @searched="(query) => search = query"
-            @sort-or-filter="sidebar = true"
+            @sort-or-filter="sidebar = !sidebar"
         />
 
         <Sidebar
@@ -36,7 +36,6 @@
                 :sort-options="sortOptions"
                 :filter-options="filterOptions"
                 @items-loaded="(items) => this.setSearchAndFilterAbility(items)"
-                @item-saved-to-collection="itemSavedToCollection"
             />
         </transition>
     </div>
@@ -67,18 +66,27 @@
         },
         watch: {
             $route() {
-                this.search = '';
+                // this.search = '';
             },
+        },
+        mounted() {
+            this.search = sessionStorage.getItem('active-search-term') || '';
+            this.setSidebarVisibility();
         },
         methods: {
             setSearchAndFilterAbility(items) {
                 this.searchAllowed = items.length ? true : false;
                 this.filterSortAllowed = items.length ? true : false;
             },
-            itemSavedToCollection() {
-                this.search = '';
-                this.$router.push('/');
-            },
+            setSidebarVisibility() {
+                const { sortBy, order } = JSON.parse(sessionStorage.getItem('active-sort-options') || "{}");
+                const filterOptions = JSON.parse(sessionStorage.getItem('active-filters') || "{}");
+                const hasFilters = Object.values(filterOptions).filter(i => Array.isArray(i) ? i.length : i).length;
+
+                if (sortBy && order || hasFilters) {
+                    this.sidebar = true;
+                }
+            }
         },
     };
 </script>

@@ -5,7 +5,7 @@
         :type="type"
         :variant="variant"
     >
-        <b-navbar-brand href="#">
+        <b-navbar-brand href="#" @click.prevent="navigateToHome">
             {{ siteTitle }}
         </b-navbar-brand>
 
@@ -109,6 +109,15 @@
             filterSortAllowed: {
                 type: Boolean,
                 default: true,
+            },
+        },
+        methods: {
+            navigateToHome() {
+                if (this.$route.name === 'Collection') {
+                    return;
+                }
+
+                this.$router.push('/');
             },
         },
     };
