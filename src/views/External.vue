@@ -4,7 +4,7 @@
         :search="search"
         :saved-recipes="savedRecipes"
         @items-loaded="(items) => $emit('items-loaded', items)"
-        @item-saved-to-collection="$emit('item-saved-to-collection')"
+        @item-saved-to-collection="itemSavedToCollection"
     />
 </template>
 
@@ -27,7 +27,13 @@
             };
         },
         mounted() {
-            this.savedRecipes = JSON.parse(sessionStorage.getItem('displayed-items') || "[]");
+            this.savedRecipes = JSON.parse(sessionStorage.getItem('saved-recipes') || "[]");
+        },
+        methods: {
+            itemSavedToCollection(recipe) {
+                this.savedRecipes.push(recipe);
+                sessionStorage.setItem('saved-recipes', JSON.stringify(this.savedRecipes));
+            },
         },
     };
 </script>

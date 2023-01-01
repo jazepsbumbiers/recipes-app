@@ -38,7 +38,7 @@
                     <RecipeCard
                         :recipe="recipe"
                         external
-                        @item-updated="$emit('item-saved-to-collection')"
+                        @item-updated="$emit('item-saved-to-collection', recipe)"
                     />
                 </b-col>
             </b-row>
@@ -49,6 +49,7 @@
 <script>
     import RecipeCard from '@/components/RecipeCard';
     import axios from "axios";
+    import _ from 'lodash';
 
     export default {
         components: {
@@ -82,19 +83,11 @@
             },
         },
         watch: {
-            async search(query) {
-                if (!query) {
-                    this.recipes = [];
-                    return;
-                }
-
-                this.loading = true;
-
-                const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
-
-                this.recipes = this.parseResults(response.data.meals);
-
-                this.loading = false;
+            search: {
+                handler: function(query) {
+                    this.searchRecipes(query);
+                },
+                immediate: true,
             },
         },
         created() {
@@ -137,6 +130,20 @@
             getSteps(recipe) {
                 return recipe.strInstructions.replace(/(\r\n|\n|\r)/gm, "").split('.').map(i => i.trim()).filter(i => i);
             },
+            searchRecipes: _.debounce(async function(query) {
+                 if (!query) {
+                    this.recipes = [];
+                    return;
+                }
+
+                this.loading = true;
+
+                const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
+
+                this.recipes = this.parseResults(response.data.meals);
+
+                this.loading = false;
+            }, 750),
         },
     };
 </script>

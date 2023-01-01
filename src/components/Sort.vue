@@ -76,23 +76,23 @@
         computed: {
             sortOptions() {
                 return {
-                    type: this.sortBy,
+                    sortBy: this.sortBy,
                     order: this.order,
                 };
             },
         },
         watch: {
             sortOptions(options) {
-                sessionStorage.setItem('sorted-options', JSON.stringify(options));
+                sessionStorage.setItem('active-sort-options', JSON.stringify(options));
                 this.$emit('sorting-active', options);
             },
         },
         mounted() {
-            const selectedOptions = sessionStorage.getItem('sorted-options');
+            const selectedOptions = sessionStorage.getItem('active-sort-options');
 
             if (selectedOptions) {
-                const {type, order} = JSON.parse(selectedOptions);
-                this.sortBy = type;
+                const { sortBy, order } = JSON.parse(selectedOptions);
+                this.sortBy = sortBy;
                 this.order = order;
             }
         },
