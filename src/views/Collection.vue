@@ -1,7 +1,6 @@
 <template>
     <List
         ref="list"
-        :search="search"
         :sort-options="sortOptions"
         :filter-options="filterOptions"
         @items-loaded="(items) => $emit('items-loaded', items)"
@@ -16,10 +15,6 @@
             List,
         },
         props: {
-            search: {
-                type: String,
-                default: '',
-            },
             sortOptions: {
                 type: Object,
                 default: () => ({}),

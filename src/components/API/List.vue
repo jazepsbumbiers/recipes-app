@@ -50,16 +50,13 @@
     import RecipeCard from '@/components/RecipeCard';
     import axios from "axios";
     import _ from 'lodash';
+    import { mapGetters } from 'vuex';
 
     export default {
         components: {
             RecipeCard,
         },
         props: {
-            search: {
-                type: String,
-                default: '',
-            },
             savedRecipes: {
                 type: Array,
                 default: () => ([]),
@@ -72,6 +69,9 @@
             };
         },
         computed: {
+            ...mapGetters({
+                search: 'getSearchTerm',
+            }),
             items() {
                 const savedRecipes = this.savedRecipes.map(recipe => recipe.name);
 

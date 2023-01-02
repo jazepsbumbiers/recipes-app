@@ -37,10 +37,8 @@
 
                 <b-nav-form>
                     <Search
-                        :search="search"
                         :search-allowed="searchAllowed"
                         class="mr-3"
-                        @searched="(query) => $emit('searched', query)"
                     />
                 </b-nav-form>
 
@@ -97,10 +95,6 @@
                         path: '/external-search',
                     },
                 ]),
-            },
-            search: {
-                type: String,
-                default: '',
             },
             searchAllowed: {
                 type: Boolean,

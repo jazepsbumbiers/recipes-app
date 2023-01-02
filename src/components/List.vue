@@ -41,16 +41,13 @@
 <script>
     import RecipeCard from '@/components/RecipeCard';
     import axios from "axios";
+    import { mapGetters } from 'vuex';
 
     export default {
         components: {
             RecipeCard,
         },
         props: {
-            search: {
-                type: String,
-                default: '',
-            },
             sortOptions: {
                 type: Object,
                 default: () => ({}),
@@ -74,6 +71,9 @@
             };
         },
         computed: {
+            ...mapGetters({
+                search: 'getSearchTerm',
+            }),
             items() {
                 const searched = this.recipes.filter(recipe => recipe.name.toLowerCase().includes(this.search.toLowerCase()));
 

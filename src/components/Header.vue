@@ -3,7 +3,6 @@
         <Navbar
             v-bind="{...$props}"
             @sort-or-filter="$emit('sort-or-filter')"
-            @searched="(query) => $emit('searched', query)"
             @add-modal-open="addModal = true"
         />
 
@@ -47,10 +46,6 @@
             Navbar,
         },
         props: {
-            search: {
-                type: String,
-                default: '',
-            },
             searchAllowed: {
                 type: Boolean,
                 default: true,

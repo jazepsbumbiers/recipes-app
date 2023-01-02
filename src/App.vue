@@ -1,11 +1,9 @@
 <template>
     <div>
         <Header
-            :search="search"
             :search-allowed="searchAllowed"
             :filter-sort-allowed="filterSortAllowed"
             @item-added="$refs.router.$refs.list.fetchData()"
-            @searched="(query) => search = query"
             @sort-or-filter="sidebar = !sidebar"
         />
 
@@ -32,7 +30,6 @@
         >
             <router-view
                 ref="router"
-                :search="search"
                 :sort-options="sortOptions"
                 :filter-options="filterOptions"
                 @items-loaded="(items) => this.setSearchAndFilterAbility(items)"
@@ -46,6 +43,7 @@
     import Sidebar from '@/components/common/Sidebar';
     import Sort from '@/components/Sort';
     import Filtering from '@/components/Filtering';
+    import { mapActions } from 'vuex';
 
     export default {
         components: {
@@ -56,7 +54,6 @@
         },
         data() {
             return {
-                search: '',
                 searchAllowed: false,
                 filterSortAllowed: false,
                 sidebar: false,
@@ -70,10 +67,13 @@
             },
         },
         mounted() {
-            this.search = sessionStorage.getItem('active-search-term') || '';
+            this.setSearchTerm(sessionStorage.getItem('active-search-term') || '');
             this.setSidebarVisibility();
         },
         methods: {
+            ...mapActions([
+                'setSearchTerm',
+            ]),
             setSearchAndFilterAbility(items) {
                 this.searchAllowed = items.length ? true : false;
                 this.filterSortAllowed = items.length ? true : false;
