@@ -1,7 +1,6 @@
 <template>
     <List
         ref="apiList"
-        :search="search"
         :saved-recipes="savedRecipes"
         @items-loaded="(items) => $emit('items-loaded', items)"
         @item-saved-to-collection="itemSavedToCollection"
@@ -14,12 +13,6 @@
     export default {
         components: {
             List,
-        },
-        props: {
-            search: {
-                type: String,
-                default: '',
-            },
         },
         data() {
             return {

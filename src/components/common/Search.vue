@@ -11,18 +11,16 @@
             v-model.trim="query"
             :placeholder="placeholder"
             :disabled="!searchAllowed"
-            @input="$emit('searched', query)"
         />
     </b-input-group>
 </template>
 
 <script>
+    import { mapActions } from 'vuex';
+    import { mapGetters } from 'vuex';
+
     export default {
         props: {
-            search: {
-                type: String,
-                default: '',
-            },
             searchAllowed: {
                 type: Boolean,
                 default: true,
@@ -34,21 +32,29 @@
         },
         data() {
             return {
-                query: this.search,
+                query: '',
             };
         },
         watch: {
-            search(query) {
-                this.query = query;
-            },
             query(value) {
+                this.setSearchTerm(value);
                 sessionStorage.setItem('active-search-term', value);
             },
+            search(value) {
+                this.query = value;
+            }
+        },
+        computed: {
+            ...mapGetters({
+                search: 'getSearchTerm',
+            }),
         },
         methods: {
+            ...mapActions([
+                'setSearchTerm',
+            ]),
             clearSearch() {
                 this.query = '';
-                this.$emit('searched', this.query);
             },
         },
     };

@@ -1,11 +1,9 @@
 <template>
     <div>
         <Header
-            :search="search"
             :search-allowed="searchAllowed"
             :filter-sort-allowed="filterSortAllowed"
             @item-added="$refs.router.$refs.list.fetchData()"
-            @searched="(query) => search = query"
             @sort-or-filter="sidebar = !sidebar"
         />
 
@@ -15,14 +13,9 @@
             id="sort-or-filter-sidebar"
             @sidebar-closed="sidebar = false"
         >
-            <Sort
-                @sorting-active="(options) => sortOptions = options"
-            />
+            <Sort />
 
-            <Filtering
-                class="mt-3"
-                @filtering-active="(options) => filterOptions = options"
-            />
+            <Filtering class="mt-3" />
         </Sidebar>
 
         <transition
@@ -32,9 +25,6 @@
         >
             <router-view
                 ref="router"
-                :search="search"
-                :sort-options="sortOptions"
-                :filter-options="filterOptions"
                 @items-loaded="(items) => this.setSearchAndFilterAbility(items)"
             />
         </transition>
@@ -46,6 +36,7 @@
     import Sidebar from '@/components/common/Sidebar';
     import Sort from '@/components/Sort';
     import Filtering from '@/components/Filtering';
+    import { mapActions } from 'vuex';
 
     export default {
         components: {
@@ -56,24 +47,30 @@
         },
         data() {
             return {
-                search: '',
                 searchAllowed: false,
                 filterSortAllowed: false,
                 sidebar: false,
-                sortOptions: {},
-                filterOptions: {},
             };
         },
         watch: {
-            $route() {
+            $route(route) {
                 // this.search = '';
+
+                if (route.name === 'Collection') {
+                    this.$nextTick(() => {
+                        this.setSidebarVisibility();
+                    });
+                }
             },
         },
         mounted() {
-            this.search = sessionStorage.getItem('active-search-term') || '';
+            this.setSearchTerm(sessionStorage.getItem('active-search-term') || '');
             this.setSidebarVisibility();
         },
         methods: {
+            ...mapActions([
+                'setSearchTerm',
+            ]),
             setSearchAndFilterAbility(items) {
                 this.searchAllowed = items.length ? true : false;
                 this.filterSortAllowed = items.length ? true : false;

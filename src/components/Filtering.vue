@@ -71,6 +71,8 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex';
+
     export default {
         data() {
             return {
@@ -96,8 +98,8 @@
             filterOptions: {
                 deep: true,
                 handler(options) {
+                    this.setFilterOptions(options);
                     sessionStorage.setItem('active-filters', JSON.stringify(options));
-                    this.$emit('filtering-active', options);
                 },
             },
         },
@@ -109,6 +111,9 @@
             }
         },
         methods: {
+            ...mapActions([
+                'setFilterOptions',
+            ]),
             resetOptions() {
                 this.filterOptions = {
                     types: [],

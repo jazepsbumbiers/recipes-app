@@ -34,6 +34,8 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex';
+
     export default {
         data() {
             return {
@@ -83,8 +85,8 @@
         },
         watch: {
             sortOptions(options) {
+                this.setSortOptions(options);
                 sessionStorage.setItem('active-sort-options', JSON.stringify(options));
-                this.$emit('sorting-active', options);
             },
         },
         mounted() {
@@ -97,6 +99,9 @@
             }
         },
         methods: {
+            ...mapActions([
+                'setSortOptions',
+            ]),
             resetOptions() {
                 this.sortBy = '';
                 this.order = 'ASC';
