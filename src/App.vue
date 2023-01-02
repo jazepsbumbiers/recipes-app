@@ -15,10 +15,7 @@
         >
             <Sort />
 
-            <Filtering
-                class="mt-3"
-                @filtering-active="(options) => filterOptions = options"
-            />
+            <Filtering class="mt-3" />
         </Sidebar>
 
         <transition
@@ -28,7 +25,6 @@
         >
             <router-view
                 ref="router"
-                :filter-options="filterOptions"
                 @items-loaded="(items) => this.setSearchAndFilterAbility(items)"
             />
         </transition>
@@ -54,7 +50,6 @@
                 searchAllowed: false,
                 filterSortAllowed: false,
                 sidebar: false,
-                filterOptions: {},
             };
         },
         watch: {
