@@ -13,9 +13,7 @@
             id="sort-or-filter-sidebar"
             @sidebar-closed="sidebar = false"
         >
-            <Sort
-                @sorting-active="(options) => sortOptions = options"
-            />
+            <Sort />
 
             <Filtering
                 class="mt-3"
@@ -30,7 +28,6 @@
         >
             <router-view
                 ref="router"
-                :sort-options="sortOptions"
                 :filter-options="filterOptions"
                 @items-loaded="(items) => this.setSearchAndFilterAbility(items)"
             />
@@ -57,7 +54,6 @@
                 searchAllowed: false,
                 filterSortAllowed: false,
                 sidebar: false,
-                sortOptions: {},
                 filterOptions: {},
             };
         },

@@ -48,10 +48,6 @@
             RecipeCard,
         },
         props: {
-            sortOptions: {
-                type: Object,
-                default: () => ({}),
-            },
             filterOptions: {
                 type: Object,
                 default: () => ({}),
@@ -73,6 +69,7 @@
         computed: {
             ...mapGetters({
                 search: 'getSearchTerm',
+                sortOptions: 'getSortOptions',
             }),
             items() {
                 const searched = this.recipes.filter(recipe => recipe.name.toLowerCase().includes(this.search.toLowerCase()));
