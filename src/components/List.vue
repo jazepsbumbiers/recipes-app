@@ -40,7 +40,7 @@
 
 <script>
     import RecipeCard from '@/components/RecipeCard';
-    import axios from "axios";
+    import { localAPI } from '../services/api';
     import { mapGetters } from 'vuex';
 
     export default {
@@ -97,7 +97,7 @@
             async fetchData() {
                 this.loading = true;
 
-                const response = await axios.get(`http://localhost:3000/recipes?_sort=${this.initialSorting.sortBy}&_order=${this.initialSorting.order}`);
+                const response = await localAPI.get(`/recipes?_sort=${this.initialSorting.sortBy}&_order=${this.initialSorting.order}`);
 
                 this.recipes = response.data;
 

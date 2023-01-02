@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const api = axios.create({
-    baseURL: 'http://localhost:3000/recipes',
+export const localAPI = axios.create({
+    baseURL: 'http://localhost:3000',
 });
 
-export default api;
+export const externalAPI = axios.create({
+    baseURL: 'https://www.themealdb.com/api/json/v1/1',
+});

@@ -202,7 +202,7 @@
 </template>
 
 <script>
-    import axios from "axios";
+    import { localAPI } from '../services/api';
 
     export default {
         props: {
@@ -377,13 +377,13 @@
                     if (this.data) {
                         delete item['id'];
 
-                        response = await axios.post(
-                            'http://localhost:3000/recipes',
+                        response = await localAPI.post(
+                            '/recipes',
                             {...item, added: + new Date()}
                         );
                     } else {
-                        response = await axios.put(
-                            `http://localhost:3000/recipes/${this.id}`,
+                        response = await localAPI.put(
+                            `/recipes/${this.id}`,
                             {...item, updated: + new Date()}
                         );
                     }
@@ -393,8 +393,8 @@
                         id: this.id,
                     });
                 } else {
-                    response = await axios.post(
-                        'http://localhost:3000/recipes',
+                    response = await localAPI.post(
+                        '/recipes',
                         {...item, added: + new Date()}
                     );
 
@@ -476,7 +476,7 @@
                 if (this.data) {
                     this.item = this.data;
                 } else {
-                    const response = await axios.get(`http://localhost:3000/recipes/${this.id}`);
+                    const response = await localAPI.get(`/recipes/${this.id}`);
                     this.item = response.data;
                 }
 

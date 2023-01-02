@@ -96,7 +96,7 @@
     import DifficultyBadge from '@/components/parts/DifficultyBadge';
     import Form from '@/components/Form';
     import moment from 'moment';
-    import axios from "axios";
+    import { localAPI } from '../services/api';
 
     export default {
         components: {
@@ -191,7 +191,7 @@
                     return;
                 }
 
-                await axios.delete(`http://localhost:3000/recipes/${id}`);
+                await localAPI.delete(`/recipes/${id}`);
 
                 this.$bvToast.toast('Recipe deleted successfully', {
                     title: 'Item deleted',

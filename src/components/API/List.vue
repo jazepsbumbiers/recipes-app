@@ -48,7 +48,7 @@
 
 <script>
     import RecipeCard from '@/components/RecipeCard';
-    import axios from "axios";
+    import { externalAPI } from '../../services/api';
     import _ from 'lodash';
     import { mapGetters } from 'vuex';
 
@@ -138,7 +138,7 @@
 
                 this.loading = true;
 
-                const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
+                const response = await externalAPI.get(`/search.php?s=${query}`);
 
                 this.recipes = this.parseResults(response.data.meals);
 
