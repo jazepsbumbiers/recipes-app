@@ -53,8 +53,14 @@
             };
         },
         watch: {
-            $route() {
+            $route(route) {
                 // this.search = '';
+
+                if (route.name === 'Collection') {
+                    this.$nextTick(() => {
+                        this.setSidebarVisibility();
+                    });
+                }
             },
         },
         mounted() {
