@@ -25,6 +25,12 @@ const state = () => ({
         difficulties: 'Difficulties',
         ASC: 'Ascending',
         DESC: 'Descending',
+        breakfast: 'Breakfast',
+        lunch: 'Lunch',
+        dinner: 'Dinner',
+        beginner: 'Beginner',
+        moderate: 'Moderate',
+        difficult: 'Difficult',
     },
 });
 

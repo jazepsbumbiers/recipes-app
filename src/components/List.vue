@@ -22,6 +22,12 @@
             </b-alert>
         </div>
 
+        <div v-if="filters.isActive" class="d-flex justify-content-center mt-2">
+            <b-alert show variant="primary">
+                {{ `Filtering by: ${filters.activeFilters}` }}
+            </b-alert>
+        </div>
+
         <b-container class="mb-5">
             <b-row>
                 <b-col
@@ -77,6 +83,19 @@
             sortActive() {
                 const { sortBy, order } = this.sortOptions;
                 return Boolean(sortBy.length && order.length);
+            },
+            filters() {
+                const activeFilterKeys = Object.keys(this.filterOptions).filter(key => Array.isArray(this.filterOptions[key]) ? this.filterOptions[key].length : this.filterOptions[key]);
+                const activeFilters = activeFilterKeys.map(key => {
+                    const values = Array.isArray(this.filterOptions[key]) ? this.filterOptions[key].join(', ') : this.filterOptions[key];
+                    return `"${this.translations[key].toLowerCase()}": ${values}`;
+                }).join(', ');
+
+                return {
+                    isActive: Boolean(activeFilterKeys.length),
+                    activeFilterKeys,
+                    activeFilters,
+                };
             },
             items() {
                 const searched = this.recipes.filter(recipe => recipe.name.toLowerCase().includes(this.search.toLowerCase()));
@@ -148,16 +167,11 @@
                 return sortedItems;
             },
             filterItems(collection) {
-                const hasFilters = Object.values(this.filterOptions).filter(i => Array.isArray(i) ? i.length : i).length;
-
-                if (!hasFilters) {
+                if (!this.filters.isActive) {
                     return collection;
                 }
 
-                const selectedFilterOptions = Object.keys(this.filterOptions).filter(key => {
-                    const value = this.filterOptions[key];
-                    return Array.isArray(value) ? value.length : value;
-                });
+                const selectedFilterOptions = this.filters.activeFilterKeys;
 
                 const filteredItems = collection.filter(recipe => {
                     return selectedFilterOptions.filter(option => {

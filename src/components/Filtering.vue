@@ -72,6 +72,7 @@
 
 <script>
     import { mapActions } from 'vuex';
+    import { mapGetters } from 'vuex';
 
     export default {
         data() {
@@ -82,16 +83,6 @@
                     forServing: 0,
                     rating: 0,
                 },
-                typeOptions: [
-                    { value: 'breakfast', text: 'Breakfast' },
-                    { value: 'lunch', text: 'Lunch' },
-                    { value: 'dinner', text: 'Dinner' },
-                ],
-                difficultyOptions: [
-                    { value: 'beginner', text: 'Beginner' },
-                    { value: 'moderate', text: 'Moderate' },
-                    { value: 'difficult', text: 'Difficult' },
-                ],
             };
         },
         watch: {
@@ -101,6 +92,19 @@
                     this.setFilterOptions(options);
                     sessionStorage.setItem('active-filters', JSON.stringify(options));
                 },
+            },
+        },
+        computed: {
+            ...mapGetters({
+                translations: 'getTranslations',
+            }),
+            typeOptions() {
+                const includableKeys = ['breakfast', 'lunch', 'dinner'];
+                return Object.keys(this.translations).filter(key => includableKeys.includes(key)).map(key => ({value: key, text: this.translations[key]}));
+            },
+            difficultyOptions() {
+                const includableKeys = ['beginner', 'moderate', 'difficult'];
+                return Object.keys(this.translations).filter(key => includableKeys.includes(key)).map(key => ({value: key, text: this.translations[key]}));
             },
         },
         mounted() {
