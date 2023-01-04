@@ -240,16 +240,13 @@
                 const requiredFields = this.requiredFields;
                 const requiredFieldValues = Object.keys(this.item).filter(key => requiredFields.includes(key)).map(key => this.item[key]);
 
-                const submitAllowed = requiredFieldValues.filter(value => Array.isArray(value) ? value.filter(v => v).length : value).length === requiredFields.length
-                    ? true
-                    : false;
+                const submitAllowed = requiredFieldValues.filter(value => Array.isArray(value) ? value.filter(v => v).length : value).length === requiredFields.length;
 
                 return submitAllowed;
             },
             resetAllowed() {
-                return Object.values(this.item).filter(value => Array.isArray(value) ? value.filter(v => v).length : value).length
-                    ? true
-                    : false;
+                const fieldValues = Object.values(this.item).filter(value => Array.isArray(value) ? value.filter(v => v).length : value);
+                return Boolean(fieldValues.length);
             },
         },
         watch: {
