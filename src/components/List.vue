@@ -4,18 +4,17 @@
         rounded="sm"
         spinner-variant="primary"
     >
-        <div v-if="items.length">
-            <h5 class="d-flex justify-content-center mt-5 text-primary font-weight-bold">
+        <div v-if="items.length" class="d-flex justify-content-center mt-5">
+            <h5 class="text-primary font-weight-bold">
                 Your recipes <b-badge variant="primary" class="ml-3 mt-1">{{ items.length }}</b-badge>
             </h5>
         </div>
 
-        <h5
-            v-if="!loading && !items.length"
-            class="d-flex justify-content-center mt-5 text-danger font-weight-bold"
-        >
-            No recipes found...
-        </h5>
+        <div v-if="!loading && !items.length" class="d-flex justify-content-center mt-5">
+            <h5 class="text-danger font-weight-bold">
+                No recipes found...
+            </h5>
+        </div>
 
         <b-container class="mb-5">
             <b-row>
@@ -73,11 +72,12 @@
 
                 const filtered = this.filterItems(searched);
 
-                const { sortBy, order } = this.sortOptions;
+                let { sortBy, order } = this.sortOptions;
 
                 if (!sortBy) {
                     const { sortBy: initialOrderBy, order: initialOrder } = this.initialSorting;
-                    return this.sortItems(initialOrderBy, initialOrder, filtered);
+                    sortBy = initialOrderBy;
+                    order = initialOrder;
                 }
 
                 const sorted = this.sortItems(sortBy, order, filtered);
@@ -99,7 +99,11 @@
 
                 const response = await localAPI.get(`/recipes?_sort=${this.initialSorting.sortBy}&_order=${this.initialSorting.order}`);
 
-                this.recipes = response.data;
+                this.recipes = response.data.map(recipe => ({
+                    ...recipe,
+                    updated: recipe.updated ?? 0,
+                    forServing: recipe.forServing ?? 0
+                }));
 
                 this.loading = false;
 

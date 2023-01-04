@@ -18,15 +18,15 @@ const state = () => ({
 });
 
 const mutations = {
-  setSearchTerm (state, query) {
-    state.searchTerm = query;
-  },
-  setSortOptions (state, options) {
-    state.sortOptions = options;
-  },
-  setFilterOptions (state, options) {
-    state.filterOptions = options;
-  },
+    setSearchTerm (state, query) {
+        state.searchTerm = query;
+    },
+    setSortOptions (state, options) {
+        state.sortOptions = options;
+    },
+    setFilterOptions (state, options) {
+        state.filterOptions = options;
+    },
 };
 
 const actions = {
@@ -36,14 +36,14 @@ const actions = {
 };
 
 const getters = {
-  getSearchTerm: state => state.searchTerm,
-  getSortOptions: state => state.sortOptions,
-  getFilterOptions: state => state.filterOptions,
+    getSearchTerm: state => state.searchTerm,
+    getSortOptions: state => state.sortOptions,
+    getFilterOptions: state => state.filterOptions,
 };
 
 export default new Vuex.Store({
-  state,
-  getters,
-  actions,
-  mutations,
+    state,
+    getters,
+    actions,
+    mutations,
 });
