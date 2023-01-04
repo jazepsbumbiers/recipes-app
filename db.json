@@ -171,9 +171,9 @@
     },
     {
       "name": "Beef Wellington",
-      "type": "",
+      "type": "lunch",
       "forServing": 4,
-      "difficultyLevel": "",
+      "difficultyLevel": "moderate",
       "ingredients": [
         "Mushrooms (400g)",
         "English Mustard (1-2tbsp)",
@@ -211,10 +211,10 @@
       ],
       "source": "http://www.goodtoknow.co.uk/recipes/164868/Gordon-Ramsay-s-beef-Wellington",
       "image": "https://www.themealdb.com/images/media/meals/vvpprx1487325699.jpg",
-      "rating": 0,
+      "rating": 5,
       "added": 1672842936420,
       "id": 6,
-      "updated": 1672843875015
+      "updated": 1672850065904
     },
     {
       "name": "Beef stroganoff",

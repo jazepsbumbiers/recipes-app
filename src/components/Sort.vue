@@ -15,7 +15,7 @@
             </b-form-checkbox>
         </b-form-group>
 
-        <b-form-group>
+        <b-form-group label="In order:">
             <b-form-select
                 v-model="order"
                 :options="orderItems"
@@ -35,47 +35,27 @@
 
 <script>
     import { mapActions } from 'vuex';
+    import { mapGetters } from 'vuex';
 
     export default {
         data() {
             return {
                 sortBy: '',
                 order: 'ASC',
-                sortableItems: [
-                    {
-                        value: 'name',
-                        text: 'Name',
-                    },
-                    {
-                        value: 'rating',
-                        text: 'Rating',
-                    },
-                    {
-                        value: 'forServing',
-                        text: 'Count of people to serve',
-                    },
-                    {
-                        value: 'added',
-                        text: 'Added at',
-                    },
-                    {
-                        value: 'updated',
-                        text: 'Updated at',
-                    },
-                ],
-                orderItems: [
-                    {
-                        value: 'ASC',
-                        text: 'Ascending',
-                    },
-                    {
-                        value: 'DESC',
-                        text: 'Descending',
-                    },
-                ],
             };
         },
         computed: {
+            ...mapGetters({
+                translations: 'getTranslations',
+            }),
+            sortableItems() {
+                const includableKeys = ['name', 'rating', 'forServing', 'added', 'updated'];
+                return Object.keys(this.translations).filter(key => includableKeys.includes(key)).map(key => ({value: key, text: this.translations[key]}));
+            },
+            orderItems() {
+                const includableKeys = ['ASC', 'DESC'];
+                return Object.keys(this.translations).filter(key => includableKeys.includes(key)).map(key => ({value: key, text: this.translations[key]}));
+            },
             sortOptions() {
                 return {
                     sortBy: this.sortBy,

@@ -16,6 +16,12 @@
             </h5>
         </div>
 
+        <div v-if="sortActive" class="d-flex justify-content-center mt-2">
+            <b-alert show variant="primary">
+                {{ `Sorting by: "${translations[sortOptions.sortBy].toLowerCase()}", in "${translations[sortOptions.order].toLowerCase()}" order` }}
+            </b-alert>
+        </div>
+
         <b-container class="mb-5">
             <b-row>
                 <b-col
@@ -66,7 +72,12 @@
                 search: 'getSearchTerm',
                 sortOptions: 'getSortOptions',
                 filterOptions: 'getFilterOptions',
+                translations: 'getTranslations',
             }),
+            sortActive() {
+                const { sortBy, order } = this.sortOptions;
+                return Boolean(sortBy.length && order.length);
+            },
             items() {
                 const searched = this.recipes.filter(recipe => recipe.name.toLowerCase().includes(this.search.toLowerCase()));
 
