@@ -272,11 +272,7 @@
                 }
             },
             addItem(type) {
-                if (!type) {
-                    return;
-                }
-
-                if (typeof type !== 'string') {
+                if (typeof type !== 'string' || !type) {
                     return;
                 }
 
@@ -320,11 +316,7 @@
                 });
             },
             deleteItem(type, idx) {
-                if (!type || !idx) {
-                    return;
-                }
-
-                if (typeof type !== 'string' || !Number.isInteger(idx)) {
+                if (typeof type !== 'string' || !type || !Number.isInteger(idx)) {
                     return;
                 }
 

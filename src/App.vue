@@ -70,8 +70,8 @@
                 'setSearchTerm',
             ]),
             setSearchAndFilterAbility(items) {
-                this.searchAllowed = items.length ? true : false;
-                this.filterSortAllowed = items.length ? true : false;
+                this.searchAllowed = Boolean(items.length);
+                this.filterSortAllowed = Boolean(items.length);
             },
             setSidebarVisibility() {
                 const { sortBy, order } = JSON.parse(sessionStorage.getItem('active-sort-options') || "{}");
