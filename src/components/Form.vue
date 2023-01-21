@@ -156,11 +156,22 @@
             </b-input-group>
         </b-form-group>
 
-        <b-form-group :label="`Recipe's source`">
-            <b-form-input
-                type="text"
-                v-model.trim="item.source"
-                :placeholder="`Enter recipe's source`"
+        <b-form-group :label="`Recipe's sources`">
+            <multiselect
+                v-model="item.sources"
+                :options="sources"
+                multiple
+                :close-on-select="false"
+                :clear-on-select="false"
+                :preserve-search="true"
+                :preselect-first="true"
+                :max-height="200"
+                :max="15"
+                :allow-empty="true"
+                :prevent-autofocus="true"
+                label="value"
+                track-by="id"
+                placeholder="Select recipe's source/-es"
             />
         </b-form-group>
 
@@ -203,8 +214,12 @@
 
 <script>
     import { localAPI } from '../services/api';
+    import Multiselect from 'vue-multiselect';
 
     export default {
+        components: {
+            Multiselect,
+        },
         props: {
             id: {
                 type: Number,
@@ -224,13 +239,21 @@
                     difficultyLevel: '',
                     ingredients: [''],
                     steps: [''],
-                    source: '',
+                    sources: [],
                     image: '',
                     rating: 0,
                 },
                 requiredFields: ['name', 'ingredients', 'steps'],
                 types: ['breakfast', 'lunch', 'dinner'],
                 difficulties: ['beginner', 'moderate', 'difficult'],
+                sources: [
+                    { id: 1, value: 'Cooking related website' },
+                    { id: 2, value: 'In a blog' },
+                    { id: 3, value: 'YouTube' },
+                    { id: 4, value: 'From a family member' },
+                    { id: 5, value: 'Self developed' },
+                    { id: 6, value: 'Saw on TV' },
+                ],
                 loading: false,
                 errors: {},
             };
@@ -474,3 +497,5 @@
         },
     };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
