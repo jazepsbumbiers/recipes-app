@@ -74,9 +74,9 @@
                 this.filterSortAllowed = Boolean(items.length);
             },
             setSidebarVisibility() {
-                const { sortBy, order } = JSON.parse(sessionStorage.getItem('active-sort-options') || "{}");
-                const filterOptions = JSON.parse(sessionStorage.getItem('active-filters') || "{}");
-                const hasFilters = Object.values(filterOptions).filter(i => Array.isArray(i) ? i.length : i).length;
+                const { sortBy, order } = JSON.parse(sessionStorage.getItem('active-sort-options') ?? "{}");
+                const filterOptions = JSON.parse(sessionStorage.getItem('active-filters') ?? "{}");
+                const hasFilters = Boolean(Object.values(filterOptions).filter(i => Array.isArray(i) ? i.length : i).length);
 
                 if (sortBy && order || hasFilters) {
                     this.sidebar = true;

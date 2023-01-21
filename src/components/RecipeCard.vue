@@ -13,7 +13,8 @@
         >
             <b-card-text>
                 <div class="mb-2">
-                    <DifficultyBadge :difficulty="recipe.difficultyLevel" />
+                    <Badge :type="recipe.type" class="mr-3" />
+                    <Badge :difficulty="recipe.difficultyLevel" />
                 </div>
 
                 <div>
@@ -41,7 +42,7 @@
                 class="d-block"
                 v-b-modal="`show-recipe-${recipe.id}-modal`"
             >
-                {{ external ? 'Show recipe' : 'Show/edit recipe' }}
+                Show/edit recipe
             </b-button>
 
             <b-button
@@ -93,14 +94,14 @@
 </template>
 
 <script>
-    import DifficultyBadge from '@/components/parts/DifficultyBadge';
+    import Badge from '@/components/parts/Badge';
     import Form from '@/components/Form';
     import moment from 'moment';
     import { localAPI } from '../services/api';
 
     export default {
         components: {
-            DifficultyBadge,
+            Badge,
             Form,
         },
         props: {

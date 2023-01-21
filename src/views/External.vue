@@ -20,7 +20,7 @@
             };
         },
         mounted() {
-            this.savedRecipes = JSON.parse(sessionStorage.getItem('saved-recipes') || "[]");
+            this.savedRecipes = JSON.parse(sessionStorage.getItem('saved-recipes') ?? "[]");
         },
         methods: {
             itemSavedToCollection(recipe) {
