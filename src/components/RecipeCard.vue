@@ -1,40 +1,38 @@
 <template>
-    <div>
-        <b-card
-            :title="recipe.name"
-            :img-src="recipe.image || require('../assets/no-img.webp')"
-            :img-alt="recipe.name"
-            img-top
-            :img-height="imgHeight"
-            :img-width="imgWidth"
-            :bg-variant="bgVariant"
-            :tag="tag"
-            class="mr-3 mt-5"
-        >
-            <b-card-text>
-                <div class="mb-2">
-                    <Badge :type="recipe.type" class="mr-3" />
-                    <Badge :difficulty="recipe.difficultyLevel" />
-                </div>
+    <b-card
+        :title="recipe.name"
+        :img-src="recipe.image || require('../assets/no-img.webp')"
+        :img-alt="recipe.name"
+        img-top
+        :img-height="imgHeight"
+        :img-width="imgWidth"
+        :bg-variant="bgVariant"
+        :tag="tag"
+        class="mr-3 mt-5"
+    >
+        <b-card-text>
+            <div class="mb-2">
+                <Badge :type="recipe.type" class="mr-3" />
+                <Badge :difficulty="recipe.difficultyLevel" />
+            </div>
 
-                <div>
-                    <span class="font-weight-bold">Ingredients:</span>
-                    {{ recipeIngredients }}
-                </div>
+            <div>
+                <span class="font-weight-bold">Ingredients:</span>
+                {{ recipeIngredients }}
+            </div>
+        </b-card-text>
 
-                <div>
-                    <b-form-rating
-                        :value="recipe.rating"
-                        readonly
-                        inline
-                        size="lg"
-                        no-border
-                        color="#ff8800"
-                        class="p-0 mt-2"
-                        style="background-color: #f8f9fa;"
-                    />
-                </div>
-            </b-card-text>
+        <div class="actions-and-info-block">
+            <b-form-rating
+                :value="recipe.rating"
+                readonly
+                inline
+                size="lg"
+                no-border
+                color="#ff8800"
+                class="p-0 mt-2"
+                style="background-color: #f8f9fa;"
+            />
 
             <b-button
                 variant="primary"
@@ -59,7 +57,7 @@
                 <small class="text-muted d-block">Date added: {{ dateAdded(recipe) }}</small>
                 <small class="text-muted d-block">Date updated: {{ dateUpdated(recipe) }}</small>
             </b-card-text>
-        </b-card>
+        </div>
 
         <b-modal
             :id="`show-recipe-${recipe.id}-modal`"
@@ -90,7 +88,7 @@
                 @item-updated="(item) => itemUpdated(item)"
             />
         </b-modal>
-    </div>
+    </b-card>
 </template>
 
 <script>
@@ -207,3 +205,15 @@
         },
     };
 </script>
+
+<style>
+    .card {
+        position: relative;
+        height: 95%;
+    }
+
+    /* .actions-and-info-block {
+        position: absolute;
+        bottom: 2%;
+    } */
+</style>
